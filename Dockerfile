@@ -12,6 +12,10 @@ RUN apk add --no-cache \
     python3 \
     yarn
 
+FROM base as dev
+
+FROM base AS build
+
 # Install project dependencies
 WORKDIR /app
 COPY mix.exs mix.lock ./
@@ -23,5 +27,3 @@ COPY . .
 RUN mix do compile
 
 EXPOSE 4000
-
-FROM base as dev
