@@ -101,4 +101,8 @@ defmodule Rinha.Accounts do
   def change_pessoa(%Pessoa{} = pessoa, attrs \\ %{}) do
     Pessoa.changeset(pessoa, attrs)
   end
+
+  def count_pessoas do
+    Repo.aggregate(Pessoa, :count, :id)
+  end
 end
