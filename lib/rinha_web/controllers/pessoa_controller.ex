@@ -6,11 +6,6 @@ defmodule RinhaWeb.PessoaController do
 
   action_fallback RinhaWeb.FallbackController
 
-  def index(conn, _params) do
-    pessoas = Accounts.list_pessoas()
-    render(conn, :index, pessoas: pessoas)
-  end
-
   def create(conn, %{"pessoa" => pessoa_params}) do
     with {:ok, %Pessoa{} = pessoa} <- Accounts.create_pessoa(pessoa_params) do
       conn
@@ -25,19 +20,11 @@ defmodule RinhaWeb.PessoaController do
     render(conn, :show, pessoa: pessoa)
   end
 
-  def update(conn, %{"id" => id, "pessoa" => pessoa_params}) do
-    pessoa = Accounts.get_pessoa!(id)
+  def count(conn, _params) do
+    count = Accounts.count_pessoas()
 
-    with {:ok, %Pessoa{} = pessoa} <- Accounts.update_pessoa(pessoa, pessoa_params) do
-      render(conn, :show, pessoa: pessoa)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    pessoa = Accounts.get_pessoa!(id)
-
-    with {:ok, %Pessoa{}} <- Accounts.delete_pessoa(pessoa) do
-      send_resp(conn, :no_content, "")
-    end
+    conn
+    |> put_status(:ok)
+    |> json(count)
   end
 end
