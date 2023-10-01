@@ -7,5 +7,7 @@ defmodule RinhaWeb.Router do
 
   scope "/api", RinhaWeb do
     pipe_through :api
+
+    resources "/pessoas", PessoaController, except: [:new, :edit, :update, :delete]
   end
 end
