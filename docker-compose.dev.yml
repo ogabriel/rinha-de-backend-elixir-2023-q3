@@ -1,6 +1,7 @@
-version: '3.8'
+version: "3.5"
 services:
   app:
+    user: "${UID}:${GID}"
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,6 +14,8 @@ services:
       DATABASE_HOSTNAME: postgres
     entrypoint: ["/app/docker-entrypoint.sh", "mix", "phx.server"]
   postgres:
+    user: "${UID}:${GID}"
+    container_name: postgres-dev
     image: postgres:13.1-alpine
     restart: always
     environment:
@@ -22,7 +25,4 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-networks:
-  default:
-    driver: bridge
+      - "./postgres-data-dev:/var/lib/postgresql/data"
