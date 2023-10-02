@@ -21,11 +21,16 @@ defmodule RinhaWeb.PessoaController do
   end
 
   def show(conn, %{"id" => id}) do
-    pessoa = Accounts.get_pessoa!(id)
-
-    conn
-    |> put_status(200)
-    |> render(:show, pessoa: pessoa)
+    with %Pessoa{} = pessoa <- Accounts.get_pessoa(id) do
+      conn
+      |> put_status(200)
+      |> render(:show, pessoa: pessoa)
+    else
+      _ ->
+        conn
+        |> put_status(404)
+        |> json(%{})
+    end
   end
 
   def search(conn, %{"t" => search_term}) do
