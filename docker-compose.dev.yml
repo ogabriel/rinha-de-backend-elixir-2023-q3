@@ -7,15 +7,11 @@ services:
       target: dev
     volumes:
       - .:/app
-    expose:
-      - 4000
     ports:
-      - "4000:4000"
+      - 4000:4000
     environment:
       DATABASE_HOSTNAME: postgres
-    networks:
-      - network
-    entrypoint: /app/docker-entrypoint.sh
+    entrypoint: ["/app/docker-entrypoint.sh", "mix", "phx.server"]
   postgres:
     image: postgres:13.1-alpine
     restart: always
@@ -27,8 +23,6 @@ services:
       - 5432:5432
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-    networks:
-      - network
 networks:
-  network:
+  default:
     driver: bridge
