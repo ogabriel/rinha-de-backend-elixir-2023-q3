@@ -1,7 +1,7 @@
 version: "3.5"
+
 services:
   app:
-    user: "${UID}:${GID}"
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,12 +9,12 @@ services:
     volumes:
       - .:/app
     ports:
-      - 4000:4000
+      - 9999:9999
     environment:
       DATABASE_HOSTNAME: postgres
     entrypoint: ["/app/docker-entrypoint.sh", "mix", "phx.server"]
+
   postgres:
-    user: "${UID}:${GID}"
     container_name: postgres-dev
     image: postgres:13.1-alpine
     restart: always
