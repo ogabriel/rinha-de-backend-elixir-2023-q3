@@ -10,6 +10,7 @@ defmodule RinhaWeb.PessoaController do
     with {:ok, %Pessoa{} = pessoa} <- Accounts.create_pessoa(pessoa_params) do
       conn
       |> put_status(201)
+      |> put_resp_header("location", ~p"/pessoas/#{pessoa}")
       |> render(:show, pessoa: pessoa)
     else
       _ ->
