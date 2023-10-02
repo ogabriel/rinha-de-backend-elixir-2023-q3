@@ -22,7 +22,18 @@ defmodule RinhaWeb.PessoaController do
 
   def show(conn, %{"id" => id}) do
     pessoa = Accounts.get_pessoa!(id)
-    render(conn, :show, pessoa: pessoa)
+
+    conn
+    |> put_status(200)
+    |> render(:show, pessoa: pessoa)
+  end
+
+  def search(conn, %{"t" => search_term}) do
+    pessoas = Accounts.search_pessoas(search_term)
+
+    conn
+    |> put_status(200)
+    |> render(:index, pessoas: pessoas)
   end
 
   def count(conn, _params) do
