@@ -14,6 +14,8 @@ RUN apk add --no-cache \
 
 FROM base as dev
 
+EXPOSE 4000
+
 FROM base AS build
 
 # Install project dependencies
@@ -24,6 +26,18 @@ RUN mix do deps.get, deps.compile
 
 # build app
 COPY . .
-RUN mix do compile
+RUN mix do compile, release
 
-EXPOSE 4000
+FROM alpine-3.18.2 AS release
+
+RUN apk add --no-cache \
+    bash \
+    openssl-dev
+
+WORKDIR /app
+
+COPY docker_entrypoint.sh ./
+COPY --from=build /app/_build/prod/rel/elixir_app ./
+
+CMD ["release"]
+ENTRYPOINT ["docker_entrypoint.sh"]
