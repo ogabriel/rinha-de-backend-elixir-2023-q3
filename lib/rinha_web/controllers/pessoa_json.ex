@@ -13,6 +13,7 @@ defmodule RinhaWeb.PessoaJSON do
   """
   def show(%{pessoa: %Pessoa{} = pessoa}) do
     %{
+      id: pessoa.id,
       apelido: pessoa.apelido,
       nome: pessoa.nome,
       nascimento: pessoa.nascimento,
