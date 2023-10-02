@@ -36,6 +36,7 @@ defmodule Rinha.Accounts do
 
   """
   def get_pessoa!(id), do: Repo.get!(Pessoa, id)
+  def get_pessoa(id), do: Repo.get(Pessoa, id)
 
   @doc """
   Creates a pessoa.
