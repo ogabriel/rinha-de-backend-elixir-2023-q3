@@ -102,6 +102,17 @@ defmodule Rinha.Accounts do
     Pessoa.changeset(pessoa, attrs)
   end
 
+  def search_pessoas(search_term) do
+    Repo.all(
+      from p in Pessoa,
+        where:
+          ilike(p.nome, ^"%#{search_term}%") or
+            ilike(p.apelido, ^"%#{search_term}%") or
+            fragment("? = ANY(?)", ^search_term, p.stack),
+        limit: 50
+    )
+  end
+
   def count_pessoas do
     Repo.aggregate(Pessoa, :count, :id)
   end
