@@ -6,12 +6,17 @@ defmodule RinhaWeb.PessoaController do
 
   action_fallback RinhaWeb.FallbackController
 
-  def create(conn, %{"pessoa" => pessoa_params}) do
+  def create(conn, pessoa_params) do
     with {:ok, %Pessoa{} = pessoa} <- Accounts.create_pessoa(pessoa_params) do
       conn
-      |> put_status(:created)
+      |> put_status(201)
       |> put_resp_header("location", ~p"/api/pessoas/#{pessoa}")
       |> render(:show, pessoa: pessoa)
+    else
+      _ ->
+        conn
+        |> put_status(422)
+        |> json("")
     end
   end
 
