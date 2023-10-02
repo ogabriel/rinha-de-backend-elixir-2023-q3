@@ -1,0 +1,37 @@
+version: "3.5"
+name: rinha-backend-elixir
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: release
+    ports:
+      - 9999:9999
+    environment:
+      MIX_ENV: prod
+      PHX_SERVER: true
+      DATABASE_URL: ecto://postgres:postgres@postgres/rinha
+      PORT: 9999
+      SECRET_KEY_BASE: xUZ2aYKI10TzUGY4juCkDIpip9LaDi8KOj0emd8HOHiFZh2zKT5sLXg+0/wzHfnw
+    network_mode: "host"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: '1.5GB'
+  postgres:
+    container_name: postgres
+    image: postgres:13.1-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    network_mode: "host"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: '1.5GB'
