@@ -17,6 +17,7 @@ defmodule Rinha.Accounts.Pessoa do
   def changeset(pessoa, attrs) do
     pessoa
     |> cast(attrs, [:apelido, :nome, :nascimento, :stack])
-    |> validate_required([:apelido, :nome, :nascimento, :stack])
+    |> validate_required([:apelido, :nome, :nascimento])
+    |> unique_constraint(:apelido)
   end
 end
