@@ -10,8 +10,6 @@ RUN apk add --no-cache \
 
 FROM base as dev
 
-EXPOSE 4000
-
 FROM base AS build
 
 ENV MIX_ENV=prod
