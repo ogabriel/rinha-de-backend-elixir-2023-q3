@@ -14,6 +14,7 @@ services:
       DATABASE_URL: ecto://postgres:postgres@localhost/rinha
       PORT: 9999
       SECRET_KEY_BASE: xUZ2aYKI10TzUGY4juCkDIpip9LaDi8KOj0emd8HOHiFZh2zKT5sLXg+0/wzHfnw
+      ERL_MAX_PORTS: 2048
     network_mode: host
     deploy:
       resources:
