@@ -48,7 +48,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  port = System.get_env("PORT") || "9999"
+  port = String.to_integer(System.get_env("PORT") || "9999")
 
   config :rinha, RinhaWeb.Endpoint,
     https: false,
