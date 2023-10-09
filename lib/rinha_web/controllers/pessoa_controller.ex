@@ -21,7 +21,8 @@ defmodule RinhaWeb.PessoaController do
   end
 
   def show(conn, %{"id" => id}) do
-    with %Pessoa{} = pessoa <- Accounts.get_pessoa(id) do
+    with {:ok, _} = Ecto.UUID.cast(id),
+         %Pessoa{} = pessoa <- Accounts.get_pessoa(id) do
       conn
       |> put_status(200)
       |> render(:show, pessoa: pessoa)
