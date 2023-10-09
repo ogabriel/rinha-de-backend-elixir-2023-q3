@@ -16,7 +16,7 @@ defmodule RinhaWeb.PessoaController do
       _ ->
         conn
         |> put_status(422)
-        |> json("")
+        |> text("")
     end
   end
 
@@ -35,11 +35,17 @@ defmodule RinhaWeb.PessoaController do
   end
 
   def search(conn, %{"t" => search_term}) do
-    pessoas = Accounts.search_pessoas(search_term)
+    if is_binary(search_term) && byte_size(search_term) in 1..100 do
+      pessoas = Accounts.search_pessoas(search_term)
 
-    conn
-    |> put_status(200)
-    |> render(:index, pessoas: pessoas)
+      conn
+      |> put_status(200)
+      |> render(:index, pessoas: pessoas)
+    else
+      conn
+      |> put_status(400)
+      |> text("")
+    end
   end
 
   def count(conn, _params) do
@@ -47,6 +53,6 @@ defmodule RinhaWeb.PessoaController do
 
     conn
     |> put_status(:ok)
-    |> json(count)
+    |> text(count)
   end
 end
