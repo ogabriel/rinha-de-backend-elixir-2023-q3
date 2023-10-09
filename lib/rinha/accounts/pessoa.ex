@@ -19,7 +19,7 @@ defmodule Rinha.Accounts.Pessoa do
     |> cast(attrs, [:apelido, :nome, :nascimento, :stack])
     |> validate_required([:apelido, :nome, :nascimento])
     |> validate_length(:apelido, count: :bytes, min: 1, max: 32)
-    |> validate_length(:nome, count: :bytes, min: 1, max: 32)
+    |> validate_length(:nome, count: :bytes, min: 1, max: 100)
     |> validate_stack
     |> unique_constraint(:apelido)
   end
