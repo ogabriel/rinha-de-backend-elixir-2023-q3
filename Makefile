@@ -7,9 +7,12 @@ dev-exec:
 release:
 	docker compose up
 release-build:
+	docker volume rm rinha-backend-elixir_postgres-data
 	docker compose up --build
 release-exec:
 	docker compose exec app sh
+release-volume-delete:
+	docker volume rm rinha-backend-elixir_postgres-data
 down:
 	docker compose -p rinha-backend-elixir-dev down
 	docker compose down
