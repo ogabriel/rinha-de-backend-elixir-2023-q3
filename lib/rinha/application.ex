@@ -9,15 +9,17 @@ defmodule Rinha.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      RinhaWeb.Telemetry,
+      # RinhaWeb.Telemetry,
       # Start the Ecto repository
       Rinha.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Rinha.PubSub},
       # Start the Endpoint (http/https)
-      RinhaWeb.Endpoint
+      RinhaWeb.Endpoint,
       # Start a worker by calling: Rinha.Worker.start_link(arg)
       # {Rinha.Worker, arg}
+      Supervisor.child_spec({Cachex, name: :pessoas_id}, id: :pessoas_id),
+      Supervisor.child_spec({Cachex, name: :pessoas_apelido}, id: :pessoas_apelido)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
