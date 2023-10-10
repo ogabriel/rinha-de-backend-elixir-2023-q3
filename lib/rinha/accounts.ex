@@ -36,7 +36,7 @@ defmodule Rinha.Accounts do
 
   """
   def get_pessoa!(id), do: Repo.get!(Pessoa, id)
-  def get_pessoa(id), do: Cachex.get!(:pessoas, id) || Repo.get(Pessoa, id)
+  def get_pessoa(id), do: Cachex.get!(:pessoas_id, id) || Repo.get(Pessoa, id)
 
   @doc """
   Creates a pessoa.
@@ -104,12 +104,11 @@ defmodule Rinha.Accounts do
   end
 
   def search_pessoas(search_term) do
+    search_term = String.downcase(search_term)
+
     Repo.all(
       from p in Pessoa,
-        where:
-          ilike(p.nome, ^"%#{search_term}%") or
-            ilike(p.apelido, ^"%#{search_term}%") or
-            fragment("? @> ARRAY[?]::varchar[]", p.stack, ^search_term),
+        where: like(p.busca, ^"%#{search_term}%"),
         limit: 50
     )
   end
