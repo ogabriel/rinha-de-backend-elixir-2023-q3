@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   app:
+    user: ${USER_ID}:${GROUP_ID}
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,6 +12,8 @@ services:
     ports:
       - 9999:9999
     environment:
+      HOME: /app
+      MIX_HOME: /app
       DATABASE_HOSTNAME: postgres
     entrypoint: ["/app/docker-entrypoint.sh", "mix", "phx.server"]
 
