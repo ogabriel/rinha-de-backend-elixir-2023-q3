@@ -36,7 +36,7 @@ defmodule Rinha.Accounts do
 
   """
   def get_pessoa!(id), do: Repo.get!(Pessoa, id)
-  def get_pessoa(id), do: Repo.get(Pessoa, id)
+  def get_pessoa(id), do: Cachex.get!(:pessoas, id) || Repo.get(Pessoa, id)
 
   @doc """
   Creates a pessoa.
@@ -109,7 +109,7 @@ defmodule Rinha.Accounts do
         where:
           ilike(p.nome, ^"%#{search_term}%") or
             ilike(p.apelido, ^"%#{search_term}%") or
-            fragment("? = ANY(?)", ^search_term, p.stack),
+            fragment("? @> ARRAY[?]::varchar[]", p.stack, ^search_term),
         limit: 50
     )
   end
