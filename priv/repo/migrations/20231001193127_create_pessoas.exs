@@ -8,6 +8,7 @@ defmodule Rinha.Repo.Migrations.CreatePessoas do
       add :nome, :string
       add :nascimento, :date
       add :stack, {:array, :string}
+      add :busca, :text
 
       timestamps()
     end
