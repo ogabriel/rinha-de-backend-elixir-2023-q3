@@ -33,7 +33,10 @@ if config_env() == :prod do
   config :rinha, Rinha.Repo,
     # ssl: true,
     url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    pool_size: String.to_integer(System.get_env("DATABASE_POOL_SIZE") || "10"),
+    timeout: String.to_integer(System.get_env("DATABASE_TIMEOUT") || "15000"),
+    queue_target: String.to_integer(System.get_env("DATABASE_QUEUE_TARGET") || "50"),
+    queue_interval: String.to_integer(System.get_env("DATABASE_QUEUE_INTERVAL") || "1000"),
     socket_options: maybe_ipv6
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
