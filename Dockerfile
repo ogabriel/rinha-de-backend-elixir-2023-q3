@@ -1,7 +1,7 @@
 FROM hexpm/elixir:1.15.6-erlang-26.1.1-alpine-3.18.2 AS base
 
 # Install hex + rebar
-RUN mix do local.hex, local.rebar --force
+RUN MIX_HOME=/app mix do local.hex --force, local.rebar --force
 
 # Install build dependencies
 RUN apk add --no-cache \
