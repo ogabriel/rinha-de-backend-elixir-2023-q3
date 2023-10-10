@@ -35,7 +35,7 @@ defmodule RinhaWeb.PessoaController do
   end
 
   def show(conn, %{"id" => id}) do
-    with {:ok, _} = Ecto.UUID.cast(id),
+    with {:ok, _} <- Ecto.UUID.cast(id),
          %Pessoa{} = pessoa <- Accounts.get_pessoa(id) do
       conn
       |> put_status(200)
@@ -44,7 +44,7 @@ defmodule RinhaWeb.PessoaController do
       _ ->
         conn
         |> put_status(404)
-        |> json(%{})
+        |> text("")
     end
   end
 
