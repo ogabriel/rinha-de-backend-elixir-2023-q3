@@ -9,6 +9,7 @@ defmodule Rinha.Accounts.Pessoa do
     field :nome, :string
     field :nascimento, :date
     field :stack, {:array, :string}
+    field :busca, :string
 
     timestamps()
   end
@@ -23,6 +24,7 @@ defmodule Rinha.Accounts.Pessoa do
     |> validate_apelido_with_cache
     |> unique_constraint(:apelido)
     |> validate_stack
+    |> build_busca
   end
 
   defp validate_apelido_with_cache(changeset) do
@@ -45,4 +47,25 @@ defmodule Rinha.Accounts.Pessoa do
       _ -> changeset
     end
   end
+
+  defp build_busca(changeset) do
+    with true <- Enum.empty?(changeset.errors),
+         apelido <- get_field(changeset, :apelido),
+         nome <- get_field(changeset, :nome),
+         stack <- haandle_stack(get_field(changeset, :stack)),
+         busca <- "#{apelido} #{nome} #{stack}" |> String.downcase() do
+      changeset
+      |> put_change(:busca, busca)
+    else
+      _ -> changeset
+    end
+  end
+
+  defp haandle_stack(stack) when is_list(stack) do
+    stack
+    |> Enum.map(&String.downcase/1)
+    |> Enum.join(" ")
+  end
+
+  defp haandle_stack(_), do: ""
 end
