@@ -13,18 +13,22 @@ services:
       PHX_SERVER: true
       DATABASE_URL: ecto://postgres:postgres@localhost/rinha
       PORT: 9999
+      DATABASE_POOL_SIZE: 47
+      DATABASE_TIMEOUT: 20000
+      DATABASE_QUEUE_TARGET: 5000
+      DATABASE_QUEUE_INTERVAL: 10000
       SECRET_KEY_BASE: xUZ2aYKI10TzUGY4juCkDIpip9LaDi8KOj0emd8HOHiFZh2zKT5sLXg+0/wzHfnw
-      ERL_MAX_PORTS: 2048
+      ERL_MAX_PORTS: 4096
     network_mode: host
     deploy:
       resources:
         limits:
-          cpus: '0.75'
+          cpus: '0.5'
           memory: '1.5GB'
 
   postgres:
     container_name: postgres
-    image: postgres:13.1-alpine
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -34,10 +38,12 @@ services:
     network_mode: host
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
     deploy:
       resources:
         limits:
-          cpus: '0.75'
+          cpus: '1'
           memory: '1.5GB'
 
 volumes:
