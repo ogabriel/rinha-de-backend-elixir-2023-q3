@@ -1,18 +1,13 @@
-# Rinha
+# Rinha de backends
 
-To start your Phoenix server:
+Repo original da competição: https://github.com/zanfranceschi/rinha-de-backend-2023-q3
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Objetivo
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+O objetivo era criar uma apliação que fosse capaz de fazer tudo que os outros projetos já fizeram, mas SEM algumas das principais otimizações utilizadas:
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+- nginx
+- multiplos serviços (apenas um app)
+- sem batch insert
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Prints
