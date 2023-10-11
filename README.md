@@ -11,3 +11,12 @@ O objetivo era criar uma apliação que fosse capaz de fazer tudo que os outros 
 - sem batch insert
 
 ## Prints
+
+### Resultado do gatling
+![resultado gatling navegador](./images/gatling-browser.png)
+
+### Resultado do gatling no console
+![resultado gatling console](./images/gatling-console.png)
+
+### Recusos do docker durante a parte mais pesada do teste
+![Recusos do docker durante a parte mais pesada do teste](./images/docker-stats.png)
