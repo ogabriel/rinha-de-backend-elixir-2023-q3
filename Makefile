@@ -1,24 +1,23 @@
 USER_ID = $(shell id -u)
 GROUP_ID = $(shell id -g)
-DEV_PROJECT=$(shell pwd)-dev
-RELEASE_PROJECT=$(shell pwd)
+PROJECT=$(shell basename $(PWD))
 
 dev:
-	USER_ID=$(USER_ID) GROUP_ID=$(GROUP_ID) docker compose -f docker-compose.dev.yml -p $(DEV_PROJECT) up
+	USER_ID=$(USER_ID) GROUP_ID=$(GROUP_ID) docker compose -f docker-compose.dev.yml -p $(PROJECT)-dev up
 dev-build:
-	USER_ID=$(USER_ID) GROUP_ID=$(GROUP_ID) docker compose -f docker-compose.dev.yml -p $(DEV_PROJECT) up --build
+	USER_ID=$(USER_ID) GROUP_ID=$(GROUP_ID) docker compose -f docker-compose.dev.yml -p $(PROJECT)-dev up --build
 dev-exec:
-	docker compose -p $(DEV_PROJECT) exec app sh
+	docker compose -p $(PROJECT)-dev exec app sh
 dev-volume-remove:
-	docker volume rm $(DEV_PROJECT)_postgres-data
+	docker volume rm $(PROJECT)-dev_postgres-data
 release:
 	docker compose up
 release-build:
 	docker compose down
-	docker volume rm $(RELEASE_PROJECT)_postgres-data || 0
+	docker volume rm $(PROJECT)_postgres-data || exit 0
 	docker compose up --build
 release-exec:
 	docker compose exec app sh
 down:
-	docker compose -p $(DEV_PROJECT) down
+	docker compose -p $(PROJECT)-dev down
 	docker compose down
