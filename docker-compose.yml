@@ -6,8 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
       target: release
-    ports:
-      - 9999:9999
     environment:
       MIX_ENV: prod
       PHX_SERVER: true
@@ -20,6 +18,10 @@ services:
       SECRET_KEY_BASE: xUZ2aYKI10TzUGY4juCkDIpip9LaDi8KOj0emd8HOHiFZh2zKT5sLXg+0/wzHfnw
       ERL_MAX_PORTS: 4096
     network_mode: host
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["migrate_and_release"]
     deploy:
       resources:
         limits:
@@ -33,13 +35,16 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - 5432:5432
     network_mode: host
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./postgresql.conf:/etc/postgresql.conf
     command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
     deploy:
       resources:
         limits:

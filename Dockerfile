@@ -36,5 +36,4 @@ WORKDIR /app
 COPY docker-entrypoint.sh ./
 COPY --from=build /app/_build/prod/rel/rinha ./
 
-CMD ["release"]
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
