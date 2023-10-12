@@ -16,7 +16,7 @@ services:
       HOME: /app
       MIX_HOME: /app
       DATABASE_HOSTNAME: postgres
-    entrypoint: ["/app/docker-entrypoint.sh", "mix", "phx.server"]
+    command: ["mix", "phx.server"]
 
   postgres:
     image: postgres:15-alpine

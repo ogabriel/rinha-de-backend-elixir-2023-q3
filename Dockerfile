@@ -10,6 +10,8 @@ RUN apk add --no-cache \
 
 FROM base as dev
 
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+
 FROM base AS build
 
 ENV MIX_ENV=prod
