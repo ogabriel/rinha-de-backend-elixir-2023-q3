@@ -21,6 +21,19 @@ config :rinha, Rinha.Cache,
   # GC max timeout: 10 min
   gc_cleanup_max_timeout: :timer.minutes(10)
 
+config :libcluster,
+  topologies: [
+    default: [
+      strategy: Cluster.Strategy.Epmd,
+      config: [
+        hosts: [
+          :"app1@127.0.0.1",
+          :"app2@127.0.0.1"
+        ]
+      ]
+    ]
+  ]
+
 config :rinha,
   ecto_repos: [Rinha.Repo],
   generators: [binary_id: true]

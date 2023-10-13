@@ -7,6 +7,8 @@ defmodule Rinha.Application do
 
   @impl true
   def start(_type, _args) do
+    topologies = Application.get_env(:libcluster, :topologies) || []
+
     children = [
       # Start the Telemetry supervisor
       # RinhaWeb.Telemetry,
@@ -16,7 +18,8 @@ defmodule Rinha.Application do
       {Phoenix.PubSub, name: Rinha.PubSub},
       # Start the Endpoint (http/https)
       RinhaWeb.Endpoint,
-      {Rinha.Cache, []}
+      {Rinha.Cache, []},
+      {Cluster.Supervisor, [topologies, [name: Rinha.ClusterSupervisor]]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
