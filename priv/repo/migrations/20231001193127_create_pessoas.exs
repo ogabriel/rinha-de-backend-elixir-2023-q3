@@ -6,7 +6,7 @@ defmodule Rinha.Repo.Migrations.CreatePessoas do
       add :id, :binary_id, primary_key: true
       add :apelido, :string
       add :nome, :string
-      add :nascimento, :date
+      add :nascimento, :string
       add :stack, {:array, :string}
       add :busca, :text
 

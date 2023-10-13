@@ -7,7 +7,7 @@ defmodule Rinha.Accounts.Pessoa do
   schema "pessoas" do
     field :apelido, :string
     field :nome, :string
-    field :nascimento, :date
+    field :nascimento, :string
     field :stack, {:array, :string}
     field :busca, :string
 
@@ -21,9 +21,20 @@ defmodule Rinha.Accounts.Pessoa do
     |> validate_required([:apelido, :nome, :nascimento])
     |> validate_length(:apelido, count: :bytes, min: 1, max: 32)
     |> validate_length(:nome, count: :bytes, min: 1, max: 100)
+    |> validate_nascimento
     |> unique_constraint(:apelido)
     |> validate_stack
     |> build_busca
+  end
+
+  defp validate_nascimento(changeset) do
+    with true <- Enum.empty?(changeset.errors),
+         nascimento <- get_field(changeset, :nascimento),
+         {:ok, _} <- Date.from_iso8601(nascimento) do
+      changeset
+    else
+      _ -> add_error(changeset, :nascimento, "is invalid", type: :date, validation: :cast)
+    end
   end
 
   defp validate_stack(changeset) do
