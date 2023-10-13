@@ -19,7 +19,6 @@ ENV MIX_ENV=prod
 # Install project dependencies
 WORKDIR /app
 COPY mix.exs mix.lock ./
-COPY config config
 RUN mix do deps.get, deps.compile
 
 # build app
