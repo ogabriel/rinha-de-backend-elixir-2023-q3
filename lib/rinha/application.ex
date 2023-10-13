@@ -15,7 +15,8 @@ defmodule Rinha.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Rinha.PubSub},
       # Start the Endpoint (http/https)
-      RinhaWeb.Endpoint
+      RinhaWeb.Endpoint,
+      {Rinha.Cache, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
