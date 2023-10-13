@@ -14,22 +14,20 @@ defmodule RinhaWeb.PessoaController do
       |> text("")
     else
       {:error, changeset} ->
-        if invalid_types?(changeset) do
+        if non_wrong_type?(changeset) do
           conn
-          |> put_status(400)
+          |> put_status(422)
           |> text("")
         else
           conn
-          |> put_status(422)
+          |> put_status(400)
           |> text("")
         end
     end
   end
 
-  defp invalid_types?(changeset) do
-    Enum.any?(changeset.errors, fn {_, {_, error_data}} ->
-      error_data[:validation] in [:cast]
-    end)
+  defp non_wrong_type?(%{errors: [{_, {_, error_data}} | _]}) do
+    error_data[:validation] not in [:cast]
   end
 
   def show(conn, %{"id" => id}) do

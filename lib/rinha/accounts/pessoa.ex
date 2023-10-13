@@ -27,9 +27,8 @@ defmodule Rinha.Accounts.Pessoa do
     |> build_busca
   end
 
-  defp validate_nascimento(changeset) do
-    with true <- Enum.empty?(changeset.errors),
-         nascimento <- get_field(changeset, :nascimento),
+  defp validate_nascimento(%{errors: []} = changeset) do
+    with nascimento <- get_field(changeset, :nascimento),
          {:ok, _} <- Date.from_iso8601(nascimento) do
       changeset
     else
@@ -37,9 +36,10 @@ defmodule Rinha.Accounts.Pessoa do
     end
   end
 
-  defp validate_stack(changeset) do
-    with true <- Enum.empty?(changeset.errors),
-         stack <- get_field(changeset, :stack),
+  defp validate_nascimento(changeset), do: changeset
+
+  defp validate_stack(%{errors: []} = changeset) do
+    with stack <- get_field(changeset, :stack),
          true <- is_list(stack),
          false <- Enum.all?(stack, &(is_binary(&1) && byte_size(&1) in 1..32)) do
       add_error(changeset, :stack, "is invalid", type: :string, validation: :cast)
@@ -48,9 +48,10 @@ defmodule Rinha.Accounts.Pessoa do
     end
   end
 
-  defp build_busca(changeset) do
-    with true <- Enum.empty?(changeset.errors),
-         apelido <- get_field(changeset, :apelido),
+  defp validate_stack(changeset), do: changeset
+
+  defp build_busca(%{errors: []} = changeset) do
+    with apelido <- get_field(changeset, :apelido),
          nome <- get_field(changeset, :nome),
          stack <- haandle_stack(get_field(changeset, :stack)),
          busca <- "#{apelido} #{nome} #{stack}" |> String.downcase() do
@@ -60,6 +61,8 @@ defmodule Rinha.Accounts.Pessoa do
       _ -> changeset
     end
   end
+
+  defp build_busca(changeset), do: changeset
 
   defp haandle_stack(stack) when is_list(stack) do
     stack
