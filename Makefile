@@ -13,11 +13,19 @@ dev-volume-remove:
 release:
 	docker compose up
 release-build:
-	docker compose down
+	make down
 	docker volume rm $(PROJECT)_postgres-data || exit 0
 	docker compose up --build
 release-exec:
 	docker compose exec app sh
+
+nginx-build:
+	make down
+	docker volume rm $(PROJECT)-nginx_postgres-data || exit 0
+	docker compose -f docker-compose.nginx.yml -p $(PROJECT)-nginx up --build
 down:
+	docker stop postgres-11
+	docker stop postgres
 	docker compose -p $(PROJECT)-dev down
+	docker compose -p $(PROJECT)-nginx down
 	docker compose down
