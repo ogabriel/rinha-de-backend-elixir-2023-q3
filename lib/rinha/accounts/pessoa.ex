@@ -41,7 +41,7 @@ defmodule Rinha.Accounts.Pessoa do
 
   defp validate_apelido_with_cache(%{errors: []} = changeset) do
     with apelido <- get_field(changeset, :apelido),
-         true <- Cachex.get!(:pessoas_apelido, apelido) do
+         {:ok, true} <- Cachex.get(:rinha, "apelido:#{apelido}") do
       add_error(changeset, :nome, "must be a valid string")
     else
       _ -> changeset

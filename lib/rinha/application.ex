@@ -18,8 +18,7 @@ defmodule Rinha.Application do
       RinhaWeb.Endpoint,
       # Start a worker by calling: Rinha.Worker.start_link(arg)
       # {Rinha.Worker, arg}
-      Supervisor.child_spec({Cachex, name: :pessoas_id}, id: :pessoas_id),
-      Supervisor.child_spec({Cachex, name: :pessoas_apelido}, id: :pessoas_apelido)
+      {Cachex, name: :rinha}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
