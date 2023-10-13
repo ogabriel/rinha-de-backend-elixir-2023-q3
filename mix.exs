@@ -33,6 +33,8 @@ defmodule Rinha.MixProject do
   defp deps do
     [
       {:nebulex, "~> 2.5"},
+      {:shards, "~> 1.1"},
+      {:libcluster, "~> 3.3"},
       {:phoenix, "~> 1.7.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
