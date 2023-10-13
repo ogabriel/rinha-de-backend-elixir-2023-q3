@@ -15,11 +15,7 @@ defmodule Rinha.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Rinha.PubSub},
       # Start the Endpoint (http/https)
-      RinhaWeb.Endpoint,
-      # Start a worker by calling: Rinha.Worker.start_link(arg)
-      # {Rinha.Worker, arg}
-      Supervisor.child_spec({Cachex, name: :pessoas_id}, id: :pessoas_id),
-      Supervisor.child_spec({Cachex, name: :pessoas_apelido}, id: :pessoas_apelido)
+      RinhaWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
