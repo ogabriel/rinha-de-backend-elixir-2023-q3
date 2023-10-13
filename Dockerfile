@@ -30,7 +30,8 @@ FROM alpine:3.18.2 AS release
 RUN apk add --update --no-cache \
   libgcc \
   libstdc++ \
-  ncurses-libs
+  ncurses-libs \
+  curl
 
 WORKDIR /app
 
