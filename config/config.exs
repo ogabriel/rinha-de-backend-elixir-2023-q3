@@ -8,8 +8,12 @@
 import Config
 
 config :rinha, Rinha.Cache,
+  primary: [
+    gc_interval: 3_600_000,
+    backend: :shards
+  ],
   # When using :shards as backend
-  # backend: :shards,
+  backend: :shards,
   # GC interval for pushing new generation: 12 hrs
   gc_interval: :timer.hours(12),
   # Max 1 million entries in cache
