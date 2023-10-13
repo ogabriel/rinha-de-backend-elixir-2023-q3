@@ -8,8 +8,6 @@ defmodule Rinha.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Telemetry supervisor
-      # RinhaWeb.Telemetry,
       # Start the Ecto repository
       Rinha.Repo,
       # Start the PubSub system
