@@ -7,7 +7,9 @@ defmodule RinhaWeb.PessoaController do
   action_fallback RinhaWeb.FallbackController
 
   def create(conn, pessoa_params) do
-    with {:ok, %Pessoa{} = pessoa} <- Accounts.create_pessoa(pessoa_params) do
+    with {:ok, %Pessoa{} = pessoa} <- Accounts.create_pessoa(pessoa_params),
+         {:ok, _} <- Cachex.put(:pessoas_id, pessoa.id, pessoa),
+         {:ok, _} <- Cachex.put(:pessoas_apelido, pessoa.apelido, true) do
       conn
       |> put_status(201)
       |> put_resp_header("location", ~p"/pessoas/#{pessoa}")

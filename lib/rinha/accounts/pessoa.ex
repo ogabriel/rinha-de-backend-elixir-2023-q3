@@ -22,6 +22,7 @@ defmodule Rinha.Accounts.Pessoa do
     |> validate_length(:apelido, count: :bytes, min: 1, max: 32)
     |> validate_length(:nome, count: :bytes, min: 1, max: 100)
     |> validate_nascimento
+    |> validate_apelido_with_cache
     |> unique_constraint(:apelido)
     |> validate_stack
     |> build_busca
@@ -37,6 +38,17 @@ defmodule Rinha.Accounts.Pessoa do
   end
 
   defp validate_nascimento(changeset), do: changeset
+
+  defp validate_apelido_with_cache(%{errors: []} = changeset) do
+    with apelido <- get_field(changeset, :apelido),
+         true <- Cachex.get!(:pessoas_apelido, apelido) do
+      add_error(changeset, :nome, "must be a valid string")
+    else
+      _ -> changeset
+    end
+  end
+
+  defp validate_apelido_with_cache(changeset), do: changeset
 
   defp validate_stack(%{errors: []} = changeset) do
     with stack <- get_field(changeset, :stack),
