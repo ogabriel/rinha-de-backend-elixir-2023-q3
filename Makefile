@@ -10,22 +10,19 @@ dev-exec:
 	docker compose -p $(PROJECT)-dev exec app sh
 dev-volume-remove:
 	docker volume rm $(PROJECT)-dev_postgres-data
-release:
-	docker compose up
-release-build:
+one-build:
 	make down
 	docker volume rm $(PROJECT)_postgres-data || exit 0
 	docker compose up --build
-release-exec:
+one-exec:
 	docker compose exec app sh
-
-nginx-build:
+two-build:
 	make down
-	docker volume rm $(PROJECT)-nginx_postgres-data || exit 0
-	docker compose -f docker-compose.nginx.yml -p $(PROJECT)-nginx up --build
+	docker volume rm $(PROJECT)-two_postgres-data || exit 0
+	docker compose -f docker-compose.two.yml -p $(PROJECT)-two up --build
 down:
-	docker stop postgres-11
-	docker stop postgres
+	docker stop postgres-11 || exit 0
+	docker stop postgres || exit 0
 	docker compose -p $(PROJECT)-dev down
-	docker compose -p $(PROJECT)-nginx down
+	docker compose -p $(PROJECT)-two down
 	docker compose down

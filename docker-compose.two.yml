@@ -1,0 +1,97 @@
+version: "3.8"
+
+services:
+  app1: &app1
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: release
+    environment: &env_app1
+      MIX_ENV: prod
+      PHX_SERVER: true
+      DATABASE_URL: ecto://postgres:postgres@localhost/rinha
+      DATABASE_POOL_SIZE: 30
+      DATABASE_TIMEOUT: 20000
+      DATABASE_QUEUE_TARGET: 5000
+      DATABASE_QUEUE_INTERVAL: 10000
+      SECRET_KEY_BASE: xUZ2aYKI10TzUGY4juCkDIpip9LaDi8KOj0emd8HOHiFZh2zKT5sLXg+0/wzHfnw
+      ERL_MAX_PORTS: 1024
+      PORT: 9997
+      RELEASE_DISTRIBUTION: name
+      RELEASE_NODE: app1@127.0.0.1
+    network_mode: host
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["migrate_and_release"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:9997/"]
+      timeout: 2s
+      interval: 2s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: '0.5GB'
+
+  app2:
+    <<: *app1
+    depends_on:
+      app1:
+        condition: service_healthy
+    environment:
+      <<: *env_app1
+      PORT: 9998
+      RELEASE_NODE: app2@127.0.0.1
+    command: ["release"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:9998/"]
+      timeout: 2s
+      interval: 2s
+      retries: 10
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf
+    command: ["nginx", "-g", "daemon off;"]
+    network_mode: host
+    depends_on:
+      app1:
+        condition: service_healthy
+      app2:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: '0.5GB'
+
+  postgres:
+    container_name: postgres
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+    - 5432:5432
+    network_mode: host
+    volumes:
+    - postgres-data:/var/lib/postgresql/data
+    - ./postgresql.conf:/etc/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: '1.5GB'
+
+volumes:
+  postgres-data:
