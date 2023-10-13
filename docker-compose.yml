@@ -25,7 +25,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '0.6'
           memory: '1.5GB'
 
   postgres:
@@ -37,8 +37,8 @@ services:
       POSTGRES_PASSWORD: postgres
     network_mode: host
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./postgresql.conf:/etc/postgresql.conf
+    - postgres-data:/var/lib/postgresql/data
+    - ./postgresql.conf:/etc/postgresql.conf
     command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -48,7 +48,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: '0.9'
           memory: '1.5GB'
 
 volumes:
