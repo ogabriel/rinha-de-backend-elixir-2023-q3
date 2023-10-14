@@ -5,6 +5,6 @@ defmodule Rinha.Repo.Migrations.AddIndexesToPessoas do
     create unique_index(:pessoas, [:apelido])
 
     execute("CREATE EXTENSION pg_trgm")
-    create index(:pessoas, ["busca gist_trgm_ops"], using: :gist)
+    create index(:pessoas, ["busca gist_trgm_ops(siglen=256)"], using: :gist)
   end
 end

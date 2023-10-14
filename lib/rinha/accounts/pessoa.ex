@@ -63,24 +63,12 @@ defmodule Rinha.Accounts.Pessoa do
   defp validate_stack(changeset), do: changeset
 
   defp build_busca(%{errors: []} = changeset) do
-    with apelido <- get_field(changeset, :apelido),
-         nome <- get_field(changeset, :nome),
-         stack <- haandle_stack(get_field(changeset, :stack)),
-         busca <- "#{apelido} #{nome} #{stack}" |> String.downcase() do
-      changeset
-      |> put_change(:busca, busca)
-    else
-      _ -> changeset
-    end
+    busca =
+      [get_field(changeset, :apelido), get_field(changeset, :nome) | get_field(changeset, :stack) || []]
+      |> Enum.map_join(" ", &String.downcase(&1, :ascii))
+
+    put_change(changeset, :busca, busca)
   end
 
   defp build_busca(changeset), do: changeset
-
-  defp haandle_stack(stack) when is_list(stack) do
-    stack
-    |> Enum.map(&String.downcase/1)
-    |> Enum.join(" ")
-  end
-
-  defp haandle_stack(_), do: ""
 end

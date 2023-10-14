@@ -10,12 +10,12 @@ services:
       MIX_ENV: prod
       PHX_SERVER: true
       DATABASE_URL: ecto://postgres:postgres@localhost/rinha
-      DATABASE_POOL_SIZE: 30
+      DATABASE_POOL_SIZE: 15
       DATABASE_TIMEOUT: 20000
       DATABASE_QUEUE_TARGET: 5000
       DATABASE_QUEUE_INTERVAL: 10000
       SECRET_KEY_BASE: xUZ2aYKI10TzUGY4juCkDIpip9LaDi8KOj0emd8HOHiFZh2zKT5sLXg+0/wzHfnw
-      ERL_MAX_PORTS: 1024
+      ERL_MAX_PORTS: 2046
       PORT: 9997
       RELEASE_DISTRIBUTION: name
       RELEASE_NODE: app1@127.0.0.1
@@ -32,7 +32,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.35'
           memory: '0.5GB'
 
   app2:
@@ -65,7 +65,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.15'
+          cpus: '0.2'
           memory: '0.5GB'
 
   postgres:
@@ -90,7 +90,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.75'
+          cpus: '0.6'
           memory: '1.5GB'
 
 volumes:
