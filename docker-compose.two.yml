@@ -24,11 +24,6 @@ services:
       postgres:
         condition: service_healthy
     command: ["migrate_and_release"]
-    healthcheck:
-      test: ["CMD-SHELL", "curl http://localhost:9997/"]
-      timeout: 2s
-      interval: 2s
-      retries: 10
     deploy:
       resources:
         limits:
@@ -38,18 +33,12 @@ services:
   app2:
     <<: *app1
     depends_on:
-      app1:
-        condition: service_healthy
+    - app1
     environment:
       <<: *env_app1
       PORT: 9998
       RELEASE_NODE: app2@127.0.0.1
     command: ["release"]
-    healthcheck:
-      test: ["CMD-SHELL", "curl http://localhost:9998/"]
-      timeout: 2s
-      interval: 2s
-      retries: 10
 
   nginx:
     image: nginx:alpine
@@ -58,10 +47,8 @@ services:
     command: ["nginx", "-g", "daemon off;"]
     network_mode: host
     depends_on:
-      app1:
-        condition: service_healthy
-      app2:
-        condition: service_healthy
+    - app1
+    - app2
     deploy:
       resources:
         limits:
@@ -84,8 +71,8 @@ services:
     command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 2s
-      timeout: 2s
+      interval: 5s
+      timeout: 1s
       retries: 10
     deploy:
       resources:
