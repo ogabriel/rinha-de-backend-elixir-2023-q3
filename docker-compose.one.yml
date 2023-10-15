@@ -25,7 +25,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.6'
+          cpus: '0.7'
           memory: '1.5GB'
 
   postgres:
@@ -48,7 +48,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.9'
+          cpus: '0.8'
           memory: '1.5GB'
 
 volumes:
