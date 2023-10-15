@@ -24,6 +24,6 @@ two-build:
 down:
 	docker stop postgres-11 || exit 0
 	docker stop postgres || exit 0
-	docker compose -p $(PROJECT)-dev down
-	docker compose -p $(PROJECT)-two down
-	docker compose -p $(PROJECT)-one down
+	docker compose -p $(PROJECT)-dev down || exit 0
+	docker compose -p $(PROJECT)-two down || exit 0
+	docker compose -p $(PROJECT)-one down || exit 0
