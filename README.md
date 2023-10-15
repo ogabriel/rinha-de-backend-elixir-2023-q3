@@ -67,13 +67,13 @@ Generating reports...
 ---- Global Information --------------------------------------------------------
 > request count                                     114980 (OK=114980 KO=0     )
 > min response time                                      0 (OK=0      KO=-     )
-> max response time                                    191 (OK=191    KO=-     )
+> max response time                                     79 (OK=79     KO=-     )
 > mean response time                                     2 (OK=2      KO=-     )
-> std deviation                                          5 (OK=5      KO=-     )
+> std deviation                                          4 (OK=4      KO=-     )
 > response time 50th percentile                          1 (OK=1      KO=-     )
 > response time 75th percentile                          2 (OK=2      KO=-     )
-> response time 95th percentile                          3 (OK=3      KO=-     )
-> response time 99th percentile                         10 (OK=10     KO=-     )
+> response time 95th percentile                          4 (OK=4      KO=-     )
+> response time 99th percentile                         23 (OK=23     KO=-     )
 > mean requests/sec                                558.155 (OK=558.155 KO=-     )
 ---- Response Time Distribution ------------------------------------------------
 > t < 800 ms                                        114980 (100%)
@@ -81,7 +81,6 @@ Generating reports...
 > t >= 1200 ms                                           0 (  0%)
 > failed                                                 0 (  0%)
 ================================================================================
-
 A contagem de pessoas é: 46565
 ```
 
@@ -99,25 +98,30 @@ A contagem de pessoas é: 46565
 #### Resultado do gatling console
 
 ```
+Simulation RinhaBackendSimulation completed in 205 seconds
+Parsing log file(s)...
+Parsing log file(s) done
+Generating reports...
+
 ================================================================================
 ---- Global Information --------------------------------------------------------
 > request count                                     114980 (OK=114980 KO=0     )
 > min response time                                      0 (OK=0      KO=-     )
-> max response time                                    974 (OK=974    KO=-     )
-> mean response time                                    62 (OK=62     KO=-     )
-> std deviation                                        102 (OK=102    KO=-     )
+> max response time                                    133 (OK=133    KO=-     )
+> mean response time                                     5 (OK=5      KO=-     )
+> std deviation                                         10 (OK=10     KO=-     )
 > response time 50th percentile                          2 (OK=2      KO=-     )
-> response time 75th percentile                         97 (OK=97     KO=-     )
-> response time 95th percentile                        278 (OK=278    KO=-     )
-> response time 99th percentile                        456 (OK=456    KO=-     )
+> response time 75th percentile                          3 (OK=3      KO=-     )
+> response time 95th percentile                         28 (OK=28     KO=-     )
+> response time 99th percentile                         53 (OK=53     KO=-     )
 > mean requests/sec                                558.155 (OK=558.155 KO=-     )
 ---- Response Time Distribution ------------------------------------------------
-> t < 800 ms                                        114974 (100%)
-> 800 ms <= t < 1200 ms                                  6 (  0%)
+> t < 800 ms                                        114980 (100%)
+> 800 ms <= t < 1200 ms                                  0 (  0%)
 > t >= 1200 ms                                           0 (  0%)
 > failed                                                 0 (  0%)
 ================================================================================
-A contagem de pessoas é: 46565
+A contagem de pessoas é: 46565 
 ```
 
 #### Recusos do docker durante a parte mais pesada do teste
