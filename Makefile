@@ -13,12 +13,10 @@ dev-exec:
 
 one-build:
 	make down
-	docker volume rm $(PROJECT)-one_postgres-data || exit 0
 	docker compose -f docker-compose.one.yml -p $(PROJECT)-one up --build
 
 two-build:
 	make down
-	docker volume rm $(PROJECT)-two_postgres-data || exit 0
 	docker compose -f docker-compose.two.yml -p $(PROJECT)-two up --build
 
 down:
