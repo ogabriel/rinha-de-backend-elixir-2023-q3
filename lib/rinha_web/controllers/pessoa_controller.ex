@@ -15,13 +15,9 @@ defmodule RinhaWeb.PessoaController do
     else
       {:error, changeset} ->
         if non_wrong_type?(changeset) do
-          conn
-          |> put_status(422)
-          |> text("")
+          send_resp(conn, 422, "")
         else
-          conn
-          |> put_status(400)
-          |> text("")
+          send_resp(conn, 400, "")
         end
     end
   end
@@ -38,9 +34,7 @@ defmodule RinhaWeb.PessoaController do
       |> render(:show, pessoa: pessoa)
     else
       _ ->
-        conn
-        |> put_status(404)
-        |> text("")
+        send_resp(conn, 404, "")
     end
   end
 
@@ -52,9 +46,7 @@ defmodule RinhaWeb.PessoaController do
       |> put_status(200)
       |> render(:index, pessoas: pessoas)
     else
-      conn
-      |> put_status(400)
-      |> text("")
+      send_resp(conn, 400, "")
     end
   end
 
