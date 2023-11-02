@@ -212,4 +212,4 @@ A contagem de pessoas é: 46565
 
 ##### Recusos do docker durante a parte mais pesada do teste
 
-![Recusos do docker durante a parte mais pesada do teste](./images/laptop/one/docker-stats-one.png)
+![Recusos do docker durante a parte mais pesada do teste](./images/laptop/one/docker-stats.png)
