@@ -17,7 +17,7 @@ defmodule Rinha.Accounts.Pessoa do
   @doc false
   def changeset(pessoa, attrs) do
     pessoa
-    |> cast(attrs, [:apelido, :nome, :nascimento, :stack])
+    |> cast(attrs, [:apelido, :nome, :nascimento, :stack], empty_values: [])
     |> validate_required([:apelido, :nome, :nascimento])
     |> validate_length(:apelido, count: :bytes, min: 1, max: 32)
     |> validate_length(:nome, count: :bytes, min: 1, max: 100)
