@@ -4,8 +4,6 @@ defmodule RinhaWeb.PessoaController do
   alias Rinha.Accounts
   alias Rinha.Accounts.Pessoa
 
-  action_fallback RinhaWeb.FallbackController
-
   def create(conn, pessoa_params) do
     with {:ok, %Pessoa{} = pessoa} <- Accounts.create_pessoa(pessoa_params) do
       conn
