@@ -48,6 +48,46 @@ O maior bottleneck de toda a rinha foi a API `GET /pessoas?t=[:termo da busca]`,
 
 ## Resultados
 
+### Duas instâncias (com nginx)
+
+#### Resultado do gatling navegador
+
+![resultado gatling navegador part 1](./images/gatling-browser-two-1.png)
+![resultado gatling navegador part 2](./images/gatling-browser-two-2.png)
+
+#### Resultado do gatling console
+
+```
+Simulation RinhaBackendSimulation completed in 205 seconds
+Parsing log file(s)...
+Parsing log file(s) done
+Generating reports...
+
+================================================================================
+---- Global Information --------------------------------------------------------
+> request count                                     114980 (OK=114980 KO=0     )
+> min response time                                      0 (OK=0      KO=-     )
+> max response time                                    133 (OK=133    KO=-     )
+> mean response time                                     5 (OK=5      KO=-     )
+> std deviation                                         10 (OK=10     KO=-     )
+> response time 50th percentile                          2 (OK=2      KO=-     )
+> response time 75th percentile                          3 (OK=3      KO=-     )
+> response time 95th percentile                         28 (OK=28     KO=-     )
+> response time 99th percentile                         53 (OK=53     KO=-     )
+> mean requests/sec                                558.155 (OK=558.155 KO=-     )
+---- Response Time Distribution ------------------------------------------------
+> t < 800 ms                                        114980 (100%)
+> 800 ms <= t < 1200 ms                                  0 (  0%)
+> t >= 1200 ms                                           0 (  0%)
+> failed                                                 0 (  0%)
+================================================================================
+A contagem de pessoas é: 46565
+```
+
+#### Recusos do docker durante a parte mais pesada do teste
+
+![Recusos do docker durante a parte mais pesada do teste](./images/docker-stats-two.png)
+
 ### Uma instância (sem nginx)
 
 #### Resultado do gatling navegador
@@ -87,43 +127,3 @@ A contagem de pessoas é: 46565
 #### Recusos do docker durante a parte mais pesada do teste
 
 ![Recusos do docker durante a parte mais pesada do teste](./images/docker-stats-one.png)
-
-### Duas instâncias
-
-#### Resultado do gatling navegador
-
-![resultado gatling navegador part 1](./images/gatling-browser-two-1.png)
-![resultado gatling navegador part 2](./images/gatling-browser-two-2.png)
-
-#### Resultado do gatling console
-
-```
-Simulation RinhaBackendSimulation completed in 205 seconds
-Parsing log file(s)...
-Parsing log file(s) done
-Generating reports...
-
-================================================================================
----- Global Information --------------------------------------------------------
-> request count                                     114980 (OK=114980 KO=0     )
-> min response time                                      0 (OK=0      KO=-     )
-> max response time                                    133 (OK=133    KO=-     )
-> mean response time                                     5 (OK=5      KO=-     )
-> std deviation                                         10 (OK=10     KO=-     )
-> response time 50th percentile                          2 (OK=2      KO=-     )
-> response time 75th percentile                          3 (OK=3      KO=-     )
-> response time 95th percentile                         28 (OK=28     KO=-     )
-> response time 99th percentile                         53 (OK=53     KO=-     )
-> mean requests/sec                                558.155 (OK=558.155 KO=-     )
----- Response Time Distribution ------------------------------------------------
-> t < 800 ms                                        114980 (100%)
-> 800 ms <= t < 1200 ms                                  0 (  0%)
-> t >= 1200 ms                                           0 (  0%)
-> failed                                                 0 (  0%)
-================================================================================
-A contagem de pessoas é: 46565 
-```
-
-#### Recusos do docker durante a parte mais pesada do teste
-
-![Recusos do docker durante a parte mais pesada do teste](./images/docker-stats-two.png)
