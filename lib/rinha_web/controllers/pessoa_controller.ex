@@ -41,7 +41,6 @@ defmodule RinhaWeb.PessoaController do
 
   defp valid_date?(nascimento) do
     with true <- is_binary(nascimento),
-         true <- byte_size(nascimento) == 10,
          {:ok, _} <- Date.from_iso8601(nascimento) do
       true
     else
