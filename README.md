@@ -48,14 +48,100 @@ O maior bottleneck de toda a rinha foi a API `GET /pessoas?t=[:termo da busca]`,
 
 ## Resultados
 
-### Duas instâncias (com nginx)
+### Desktop
 
-#### Resultado do gatling navegador
+|CPU|RAM|
+|---|---|
+|Ryzen 5900X|32GB|
 
-![resultado gatling navegador part 1](./images/gatling-browser-two-1.png)
-![resultado gatling navegador part 2](./images/gatling-browser-two-2.png)
+#### Duas instâncias (com nginx)
 
-#### Resultado do gatling console
+##### Resultado do gatling navegador
+
+![resultado gatling navegador part 1](./images/desktop/two/gatling-browser-1.png)
+![resultado gatling navegador part 2](./images/desktop/two/gatling-browser-2.png)
+
+##### Resultado do gatling console
+
+```
+Simulation RinhaBackendSimulation completed in 205 seconds
+Parsing log file(s)...
+Parsing log file(s) done
+Generating reports...
+
+================================================================================
+---- Global Information --------------------------------------------------------
+> request count                                     114991 (OK=114991 KO=0     )
+> min response time                                      0 (OK=0      KO=-     )
+> max response time                                     67 (OK=67     KO=-     )
+> mean response time                                     1 (OK=1      KO=-     )
+> std deviation                                          2 (OK=2      KO=-     )
+> response time 50th percentile                          1 (OK=1      KO=-     )
+> response time 75th percentile                          2 (OK=2      KO=-     )
+> response time 95th percentile                          3 (OK=3      KO=-     )
+> response time 99th percentile                          3 (OK=3      KO=-     )
+> mean requests/sec                                558.209 (OK=558.209 KO=-     )
+---- Response Time Distribution ------------------------------------------------
+> t < 800 ms                                        114991 (100%)
+> 800 ms <= t < 1200 ms                                  0 (  0%)
+> t >= 1200 ms                                           0 (  0%)
+> failed                                                 0 (  0%)
+================================================================================
+A contagem de pessoas é: 46576
+```
+
+#### Uma instância (sem nginx)
+
+##### Resultado do gatling navegador
+
+![resultado gatling navegador part 1](./images/desktop/one/gatling-browser-1.png)
+![resultado gatling navegador part 2](./images/desktop/one/gatling-browser-2.png)
+
+##### Resultado do gatling console
+
+```
+Simulation RinhaBackendSimulation completed in 205 seconds
+Parsing log file(s)...
+Parsing log file(s) done
+Generating reports...
+
+================================================================================
+---- Global Information --------------------------------------------------------
+> request count                                     114991 (OK=114991 KO=0     )
+> min response time                                      0 (OK=0      KO=-     )
+> max response time                                     43 (OK=43     KO=-     )
+> mean response time                                     1 (OK=1      KO=-     )
+> std deviation                                          1 (OK=1      KO=-     )
+> response time 50th percentile                          1 (OK=1      KO=-     )
+> response time 75th percentile                          2 (OK=2      KO=-     )
+> response time 95th percentile                          3 (OK=3      KO=-     )
+> response time 99th percentile                          3 (OK=3      KO=-     )
+> mean requests/sec                                558.209 (OK=558.209 KO=-     )
+---- Response Time Distribution ------------------------------------------------
+> t < 800 ms                                        114991 (100%)
+> 800 ms <= t < 1200 ms                                  0 (  0%)
+> t >= 1200 ms                                           0 (  0%)
+> failed                                                 0 (  0%)
+================================================================================
+A contagem de pessoas é: 46576
+```
+
+### Laptop
+
+|CPU|RAM|
+|---|---|
+|Ryzen 4750U|16GB|
+
+Esses resultados estão faltando 11 registros, porque têm um erro de validação no ecto, que só descobri depois.
+
+#### Duas instâncias (com nginx)
+
+##### Resultado do gatling navegador
+
+![resultado gatling navegador part 1](./images/laptop/two/gatling-browser-1.png)
+![resultado gatling navegador part 2](./images/laptop/two/gatling-browser-2.png)
+
+##### Resultado do gatling console
 
 ```
 Simulation RinhaBackendSimulation completed in 205 seconds
@@ -84,18 +170,18 @@ Generating reports...
 A contagem de pessoas é: 46565
 ```
 
-#### Recusos do docker durante a parte mais pesada do teste
+##### Recusos do docker durante a parte mais pesada do teste
 
-![Recusos do docker durante a parte mais pesada do teste](./images/docker-stats-two.png)
+![Recusos do docker durante a parte mais pesada do teste](./images/laptop/two/docker-stats.png)
 
-### Uma instância (sem nginx)
+#### Uma instância (sem nginx)
 
-#### Resultado do gatling navegador
+##### Resultado do gatling navegador
 
-![resultado gatling navegador part 1](./images/gatling-browser-one-1.png)
-![resultado gatling navegador part 2](./images/gatling-browser-one-2.png)
+![resultado gatling navegador part 1](./images/laptop/one/gatling-browser-1.png)
+![resultado gatling navegador part 2](./images/laptop/one/gatling-browser-2.png)
 
-#### Resultado do gatling console
+##### Resultado do gatling console
 
 ```
 Simulation RinhaBackendSimulation completed in 205 seconds
@@ -124,6 +210,6 @@ Generating reports...
 A contagem de pessoas é: 46565
 ```
 
-#### Recusos do docker durante a parte mais pesada do teste
+##### Recusos do docker durante a parte mais pesada do teste
 
-![Recusos do docker durante a parte mais pesada do teste](./images/docker-stats-one.png)
+![Recusos do docker durante a parte mais pesada do teste](./images/laptop/one/docker-stats-one.png)
