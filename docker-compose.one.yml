@@ -29,7 +29,6 @@ services:
           memory: '1.5GB'
 
   postgres:
-    container_name: postgres
     image: postgres:15-alpine
     restart: always
     environment:
