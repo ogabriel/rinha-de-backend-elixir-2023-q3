@@ -1,6 +1,8 @@
 # Rinha de backend
 
-Implementação em elixir da [rinha de backend 2023 Q3](https://github.com/zanfranceschi/rinha-de-backend-2023-q3)
+Implementação em elixir da [rinha de backend 2023 Q3](https://github.com/zanfranceschi/rinha-de-backend-2023-q3).
+
+Comecei a trabalhar no projeto depois de sairem todos os resultados e os vídeos do Akita e MrPowerGamerBR, então a maioria dos "truques" já eram amplamente conhecidos. O que fiz foi tentar explorar novos "truques" além dos que eram conhecidos, além de usar esse projeto como um tempo de estudos e exploração de novas tecnológias.
 
 ## Objetivo
 
