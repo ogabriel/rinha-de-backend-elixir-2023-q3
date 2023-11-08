@@ -31,11 +31,13 @@ RUN apk add --update --no-cache \
   libgcc \
   libstdc++ \
   ncurses-libs \
+  make \
   curl
 
 WORKDIR /app
 
 COPY docker-entrypoint.sh ./
+COPY Makefile ./
 COPY --from=build /app/_build/prod/rel/rinha ./
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]

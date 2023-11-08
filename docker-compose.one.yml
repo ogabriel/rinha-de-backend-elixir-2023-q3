@@ -19,8 +19,7 @@ services:
       ERL_MAX_PORTS: 4096
     network_mode: host
     depends_on:
-      postgres:
-        condition: service_healthy
+    - postgres
     command: ["migrate_and_release"]
     deploy:
       resources:
@@ -38,11 +37,6 @@ services:
     volumes:
     - ./postgresql.conf:/etc/postgresql.conf
     command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 2s
-      timeout: 5s
-      retries: 10
     deploy:
       resources:
         limits:

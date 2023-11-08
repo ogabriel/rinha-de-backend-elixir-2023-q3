@@ -11,15 +11,29 @@ dev-build:
 dev-exec:
 	docker compose -p $(PROJECT)-dev exec app sh
 
-one-build:
-	make down
+database-check:
+	until nc -z -v -w30 localhost 5432; do \
+	  sleep 1; \
+	done
+
+docker-compose-one:
+	make docker-compose-down
+	docker compose -f docker-compose.one.yml -p $(PROJECT)-one up
+
+docker-compose-one-build:
+	make docker-compose-down
 	docker compose -f docker-compose.one.yml -p $(PROJECT)-one up --build
 
-two-build:
-	make down
+docker-compose-two:
+	make docker-compose-down
+	docker compose -f docker-compose.two.yml -p $(PROJECT)-two up
+
+docker-compose-two-build:
+	make docker-compose-down
 	docker compose -f docker-compose.two.yml -p $(PROJECT)-two up --build
 
-down:
+docker-compose-down:
+	docker stop postgres-15 || exit 0
 	docker stop postgres-11 || exit 0
 	docker stop postgres || exit 0
 	docker compose -p $(PROJECT)-dev down || exit 0
